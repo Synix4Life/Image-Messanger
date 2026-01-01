@@ -10,14 +10,11 @@ def ascii_to_binary(_text: str) -> np.ndarray:
 
     padded_binary_string = binary_string.ljust(height * width, '0')
 
-    binary_array = np.array(list(padded_binary_string), dtype=int).reshape((height, width))
-
-    return binary_array
+    return np.array(list(padded_binary_string), dtype=int).reshape((height, width))
 
 def array_to_image(_array: np.array, filename: str):
     img = (1 - _array) * 255
-    img = img.astype(np.uint8)
-    cv2.imwrite(filename, img)
+    cv2.imwrite(filename, img.astype(np.uint8))
 
 def generate(message: str, filename: str) -> None:
     """

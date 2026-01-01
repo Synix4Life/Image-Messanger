@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+from pathlib import Path
 
 def binary_to_ascii(_binary_array: np.ndarray) -> str:
     binary_string = ''.join(map(str, _binary_array.flatten()))
@@ -13,16 +14,13 @@ def binary_to_ascii(_binary_array: np.ndarray) -> str:
     return ''.join(ascii_chars)
 
 def image_to_array(filename: str) -> np.array:
+    if not Path(filename).is_file():
+        raise FileNotFoundError(f"Image file not found: '{filename}'")
+
     img = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
+    return (img < 128).astype(int)
 
-    if img is None:
-        raise FileNotFoundError(f"Error: Could not read the image at '{filename}'")
-    
-    binary_img = (img < 128).astype(int)
-    
-    return binary_img
-
-def degenerate(filename: str) -> str:
+def reconstruct(filename: str) -> str:
     """
     Method to 'decrypt' the image
     :param filename: The filename

@@ -1,2 +1,2 @@
-from .degenerator import degenerate
+from .reconstructor import reconstruct
 from .generator import generate
